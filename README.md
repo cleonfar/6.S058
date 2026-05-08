@@ -1,10 +1,12 @@
-# GTA-UAV Sequential Localization
+# UAV Sequential Localization (University-1652)
 
-This repository is a lightweight starting point for UAV-to-satellite image localization with the GTA-UAV dataset.
+This repository is a lightweight starting point for UAV-to-satellite image localization with the [University-1652](https://github.com/layumi/University1652-Baseline) dataset.
+
+> **Note on naming:** Many files, modules, and CLI entry points are prefixed with `gtauav` or similar. This is because the project was originally built around the GTA-UAV dataset before switching to University-1652. The filenames were not updated to avoid breaking existing scripts and runs.
 
 ## What is included
 
-- Dataset loading helpers for the GTA-UAV JSON annotation files
+- Dataset loading helpers for the University-1652 JSON annotation files
 - Sequence reconstruction from drone image names
 - Sliding-window batch generation for sequential training
 - A small CLI to inspect the reconstructed sequences
@@ -12,7 +14,7 @@ This repository is a lightweight starting point for UAV-to-satellite image local
 
 ## Layout
 
-- `dataset/` contains the GTA-UAV images and split JSON files
+- `dataset/` contains the University-1652 images and split JSON files
 - `src/gtauav_loc/` contains the importable Python package
 - `tests/` contains a small unit test
 
