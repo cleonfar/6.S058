@@ -1,0 +1,12 @@
+Checkpoint : runs/baseline_v6/best.pt
+Split      : University-Release/university_test.json
+N evaluated: 8517
+
+Overall
+  mean   : 95.57px
+  median : 84.94px
+  p25/p75: 54.25px / 126.25px
+
+By SIFT tier
+  Overhead (n=1471) : mean=73.37px  median=63.59px
+  Oblique  (n=7046): mean=100.21px  median=89.62px

@@ -1,0 +1,4 @@
+[console_scripts]
+gtauav-eval = gtauav_loc.evaluate:main
+gtauav-loc = gtauav_loc.cli:main
+gtauav-train-baseline = gtauav_loc.train_baseline:main

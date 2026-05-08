@@ -1,0 +1,73 @@
+Metadata-Version: 2.4
+Name: gtauav-loc
+Version: 0.1.0
+Summary: GTA-UAV localization utilities
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+
+# GTA-UAV Sequential Localization
+
+This repository is a lightweight starting point for UAV-to-satellite image localization with the GTA-UAV dataset.
+
+## What is included
+
+- Dataset loading helpers for the GTA-UAV JSON annotation files
+- Sequence reconstruction from drone image names
+- Sliding-window batch generation for sequential training
+- A small CLI to inspect the reconstructed sequences
+- A basic test to validate the sequence grouping logic
+
+## Layout
+
+- `dataset/` contains the GTA-UAV images and split JSON files
+- `src/gtauav_loc/` contains the importable Python package
+- `tests/` contains a small unit test
+
+## Setup
+
+Create and activate a Python environment, then install the package in editable mode:
+
+```bash
+pip install -e .
+pip install -e .[dev]
+```
+
+## Quick start
+
+Inspect the reconstructed sequence layout:
+
+```bash
+gtauav-loc summary --split dataset/same-area-drone2sate-train.json
+```
+
+Use the library from Python:
+
+```python
+from gtauav_loc import load_split, group_into_sequences
+
+samples = load_split("dataset/same-area-drone2sate-train.json", "dataset")
+sequences = group_into_sequences(samples)
+print(len(samples), len(sequences))
+```
+
+Train the first retrieval baseline with cached satellite embeddings and GPU warp preprocessing:
+
+```powershell
+gtauav-train-baseline --split dataset/same-area-drone2sate-train.json --dataset-root dataset --precompute-dir data/precompute --out-dir runs/baseline --use-gpu --warp-backend torch --epochs 10 --batch-size 16
+```
+
+The trainer uses mixed precision on CUDA automatically, writes checkpoints to `runs/baseline`, and reports per-epoch progress plus loss/ETA information.
+
+Evaluate a trained checkpoint with the shared benchmark harness:
+
+```powershell
+gtauav-eval --checkpoint runs/baseline/best.pt --split dataset/same-area-drone2sate-test.json --dataset-root dataset --precompute-dir data/precompute --use-gpu --warp-backend torch
+```
+
+This uses the same loading and preprocessing path for every model variant, so baseline and sequential runs can be compared under the same conditions.
+
+## Next step
+
+The current scaffold is ready for adding a sequential localization model that consumes prior predictions as context during inference.

@@ -1,0 +1,4 @@
+runs/ filter=lfs diff=lfs merge=lfs -text
+runs/baseline/best.pt filter=lfs diff=lfs merge=lfs -text
+runs/baseline/last.pt filter=lfs diff=lfs merge=lfs -text
+*.pt filter=lfs diff=lfs merge=lfs -text
